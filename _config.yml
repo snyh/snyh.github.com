@@ -1,0 +1,31 @@
+source: .
+markdown: kramdown
+destination: ./_site
+plugins: ./_plugins/
+pygments: true
+safe: false
+server: false
+auto: false
+permalink: /blog/:year/:month/:day/:title.html
+
+exclude: ["bootstrap", "CNAME", "makefile"]
+
+url: snyh.org
+brand: snyh.org 
+
+nav:
+    - url: /
+      title: 主页
+
+    - url: /blog/
+      title: 随笔
+
+    - url: /album/
+      title: 往夕
+
+    - url: /project/
+      title: 实验田
+
+    - url: /about.html
+      title: 关于
+

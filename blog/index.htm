@@ -1,0 +1,15 @@
+---
+layout: page
+title: blog
+---
+
+<div class="row">
+	<div class="span9">
+		{% assign posts = site.posts %}
+		{% include blog_list.tpl %}
+	</div>
+	<div class="span3">
+		{% include blog_sidler.tpl %}
+	</div>
+</div>
+
