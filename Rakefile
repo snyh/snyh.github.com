@@ -5,6 +5,7 @@ task :build => :project do
 end
 
 task :commit => :build do
+	puts %x[cd _compiled && git-remove-history .]
 	puts %x[rsync -q -acvrz --exclude .git --delete _site/ _compiled/]
 	puts %x[cd _compiled && git add . && git commit -am `date +%F_%H-%M_%s`;]
 end
