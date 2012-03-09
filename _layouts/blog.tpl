@@ -8,7 +8,7 @@ js1:
 <div class="row">
 <div class="span9">
 			<span><strong>{{page.title}}</strong></span> 
-			<small>{{page.date}}</small>
+			<small>{{page.date | date_to_string }}</small>
 
 <hr>
 {{ content }}

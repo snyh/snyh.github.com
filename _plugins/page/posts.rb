@@ -9,7 +9,6 @@ module Jekyll
 			self.process(@name)
 			self.read_yaml(File.join(base, '_layouts'), 'posts.tpl')
 			self.data['posts'] = posts
-			puts data
 		end
 	end
 

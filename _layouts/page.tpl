@@ -18,7 +18,7 @@ body {
 }
 </style>
 <link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
-<!--[if lt IE9]>
+<!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <link rel="shortcut icon" href="/assets/img/favicon.png">
@@ -50,8 +50,19 @@ $(function(){
 });
 
 var jiathis_config = {data_track_clickback:true};
+
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
 </script>
-
-
 </body>
 </html>

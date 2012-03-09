@@ -8,7 +8,7 @@ server: false
 auto: false
 permalink: /blog/:year/:month/:day/:title.html
 
-exclude: ["bootstrap", "CNAME", "makefile"]
+exclude: ["bootstrap", "CNAME", "Rakefile", "project/config.yml"]
 
 url: snyh.org
 brand: snyh.org 
@@ -28,4 +28,3 @@ nav:
 
     - url: /about.html
       title: 关于
-

@@ -14,11 +14,11 @@ layout: page
 <thead><h4>{{page.title}}信息</h4></thead>
 
 <tr>
-<td><span class="label">下载可执行文件:</span></td>
+<td><span class="label">可执行文件:</span></td>
 <td>
 
 <div class="btn-group">
-<a class="btn" href="#">选择平台</a>
+<a class="btn" href="#">选择</a>
 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 <span class="caret"></span>
 </a>

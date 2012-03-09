@@ -9,7 +9,37 @@ module Jekyll
 			category(site.config["infos"], site)
 			archive(site.config["infos"], site)
 			tag_cloud(site.config["infos"], site)
+			project(site.config["infos"], site)
 
+		end
+
+		def get_readme(dir)
+			Dir.glob("#{dir}/*/README.md") do |d|
+				name = d.split('/')[-2]
+				base = "#{dir}/#{name}"
+				if File.exists? "#{base}/index.html"
+					url = "/#{base}/index.html" 
+				else
+					url = "/#{base}/README.html"
+				end
+				yield item = {	
+					"name" => name,
+					"url" => url,
+					"title" => name
+				}
+			end
+		end
+
+		def project(infos, site)
+			proj = []
+			get_readme("./project") do |p|
+				name = p["name"]
+				sub_proj = []
+				get_readme("./project/#{name}") {|x| sub_proj.push x }
+				p["sub"] = sub_proj if sub_proj.length > 0
+				proj.push(p)
+			end
+			infos["project"] = proj
 		end
 
 		def category(infos, site)
