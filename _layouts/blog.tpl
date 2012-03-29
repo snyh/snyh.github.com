@@ -7,13 +7,14 @@ js1:
 
 <div class="row">
 <div class="span9">
-			<span><strong>{{page.title}}</strong></span> 
-			<small>{{page.date | date_to_string }}</small>
+<span><strong>{{page.title}}</strong></span> 
+<small>{{page.date}}</small>
 
 <hr>
 {{ content }}
 <hr>
-		<ul class="pager">
+<ul class="pager">
+
 {% if page.previous  %}
 <li class="previous"><a href="{{page.previous.url}}">{{page.previous.title}}</a></li>
 {% else %}
@@ -36,6 +37,6 @@ js1:
 
 </div>
 <div class="span3">
-{% include blog_sidler.tpl %}
+{% include blog_sidebar.tpl %}
 </div>
 </div>

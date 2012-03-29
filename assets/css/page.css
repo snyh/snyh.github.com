@@ -1,7 +1,28 @@
 body {
 	background: #e0e0e0;
 }
+
+.blog_item {
+    margin-bottom: 20px;
+    padding: 5px 10px;
+    background: white;
+    box-shadow: 10px 10px 5px #888;
+    border-radius: 1em;
+}
+
+.project_item {
+	height: 200px;
+	width: 200px;
+	margin: 20px;
+	padding: 5px;
+	float: left;
+}
+.project_item .desc {
+	border-top: solid 1px;
+	padding-top: 5px;
+}
 #Footer {
+	clear: both;
 	line-height: 1em;
 	background: #e6e8e8;
 	text-align:center;

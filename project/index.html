@@ -2,15 +2,17 @@
 layout: page
 title: project
 ---
-页面正在完善中
-<div class="row">
-	<div class="span8">
+<div class="alert alert-warning">
+    这里的大部分内容由于都是后期整理所以文档十分不完善，需要慢慢整理
+</div>
+
 {% for pro in site.infos.project %}
-<p> 
-	<a href={{ pro.url }}>{{pro.name}}</a> 
-</p>
+<div class="project_item"> 
+	<h2 class="title"><a href={{ pro.url }}>{{pro.name}}</a> </h2>
+	<p class="desc"> {{pro.desc}} </p>
+</div>
+
+<div id="project_show" class="carousel">
+
+</div>
 {% endfor %}
-</div>
-<div class="span4">
-</div>
-</div>

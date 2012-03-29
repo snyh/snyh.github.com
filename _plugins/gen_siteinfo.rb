@@ -13,6 +13,14 @@ module Jekyll
 
 		end
 
+		def head_field(path, key)
+			File.open(path).each do |line|
+				result = /^\s*#{key}\s*:\s*(.*?)\s*$/.match(line)
+				return result[1] if result
+			end
+			return nil
+		end
+
 		def get_readme(dir)
 			Dir.glob("#{dir}/*/README.md") do |d|
 				name = d.split('/')[-2]
@@ -25,7 +33,8 @@ module Jekyll
 				yield item = {	
 					"name" => name,
 					"url" => url,
-					"title" => name
+					"title" => head_field(d, "title"),
+					"desc" => head_field(d, "desc")
 				}
 			end
 		end
@@ -70,9 +79,9 @@ module Jekyll
 			end
 			tags.sort! { |a, b| a[:title] <=> b[:title] }
 			min_count = tags.min { |a, b| a[:posts].length <=> b[:posts].length }[:posts].length
-			max_count = tags.max { |a, b| a[:posts].length <=> b[:posts].length }[:posts].length
+			max_count = tags.max { |a, b| a[:posts].length <=> b[:posts].length }[:posts].length + 1 #避免除0
 			weights = tags.inject({}) do |result, tag|
-				result[tag[:title]] = (tag[:posts].length - min_count) * (280 - 75) / (max_count - min_count) + 75
+				result[tag[:title]] = (tag[:posts].length - min_count) * (280 - 75) / ( max_count - min_count ) + 75 
 				result
 			end
 			tags.inject("") do |html, tag|

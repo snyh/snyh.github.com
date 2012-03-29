@@ -1,9 +1,6 @@
 ---
-layout: page
+layout: blog_list
 ---
-<div id="container">
-<div class="row">
-<div class="span9">
 <h1 class="post-title">{{ page.year }}</h1>
 <p class="lead">{{ page.year }}年的所有文章</p>
 {% for m in (1..12) reversed %}
@@ -30,11 +27,3 @@ layout: page
 <h1><a href="/blog/{{year}}">{{ year}}</a></h1>
 {% endif %}
 {% endfor %}
-</div>
-
-<div class="span3">
-{% include blog_sidler.tpl %}
-</div>
-
-
-</div>

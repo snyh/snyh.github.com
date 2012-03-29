@@ -1,4 +1,5 @@
-{% for post in posts limit: 10%}
+{% for post in posts limit: 10 %}
+<div class="blog_item">
 <h2>
 <a href={{ post.url }}>{{post.title}}</a>
 <a href="/blog/category/{{post.category}}"><span class="label label-info">{{post.category}}</span></a>
@@ -19,10 +20,11 @@
 {% if post.summary %}
 <p> {{ post.summary | strip_html | truncatewords: 150 }} </p>
 {% else %}
-<p> {{ post.content | strip_html | truncatewords: 50 }} </p>
+<p> {{ post.content | truncatewords: 10 }} </p>
 {% endif %}
 
 <a href="{{ post.url }}">Read more...</a>
 
 <br/>
+</div>
 {% endfor %}

@@ -1,5 +1,5 @@
 ---
-layout: blog
+layout: blog_list
 ---
 
 {% assign posts = page.posts %}
