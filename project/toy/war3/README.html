@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+<meta name="keywords" content="">
+<title> snyh war3 </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<p>本来是打算做一个War3局域网链接工具的
+网上有流传的一个工具, 但只能看到本子局域网内部的主机, 其他网段的主机需要手动
+添加.</p>
+
+<p>其实完全可以实现自动添加, 只是做这个的时候刚到湖经上学, 而且学校当时的网
+还算可以感觉做出来也没什么用就在完成功能性要求后没继续做了.</p>
+
+<p>记得当时已经可以做到显示其他主机.</p>
+
+<p>主要思路是通过Internet来保存各个节点的内网IP(以大局域网为一个类,比如一个学校)</p>
+
+<p>然后登录的时候就能通过抓取到使用此工具的内网IP, 并且向这些IP报告自己的IP。
+这样只需要在第一次登录的时候进行很少的数据通讯便能维护整个IP数据.</p>
+
+<p>后面的事情就很简单了, 发送War的主机广播信息, 这里由于不能占用war3本身的端口
+所以使用的raw socket进行监听和发送.
+War3数据包格式网上已经有人分析了自己分析也不难,用wireshark之类的工具抓包分析
+下.</p>
+
+<p>保存IP数据的公网服务器我当时是使用的GAE不过源码我弄丢了, 又懒得翻墙去把数据抓
+回来,主要是代码也比较简单随便用什么写都可以.</p>
+
+<p>主要服务器实现了3个接口就行了如下</p>
+
+<p>注册本机内网ip, 刚登录的时候
+url(server + _(“?action=reg&amp;ip=”) + ip + _(“&amp;zone=”) + wxString()«zone);</p>
+
+<p>删除本机内网ip, 退出的时候
+url(server + _(“?action=del&amp;ip=”) + ip + _(“&amp;zone=”) + wxString()«zone);</p>
+
+<p>获取当前域所有的内网ip地址, 登录时候
+url(server + _(“?action=download&amp;zone=”) + wxString()«zone);</p>
+
+<p>三个接口都带zone参数, 主要是用来区分大局域网的,一般一个学校一个zone就行.</p>
+
+<p>不过如果直接不加修改就用我估计不能正常运行, 当时没用版本管理, 代码乱丢乱改,
+记得最后好像改成问题就没继续做了.</p>
+
+
+
+</div>
+
+<div class="span3">
+
+
+<table class="table table-brodered">
+<thead><h4>war3信息</h4></thead>
+
+<tr>
+<td><span class="label">可执行文件:</span></td>
+<td>
+
+<div class="btn-group">
+<a class="btn" href="#">选择版本</a>
+<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#">windows</a></li>
+<li><a href="#">linux</a></li>
+</ul>
+</div>
+
+</td>
+</tr>
+
+
+
+<tr>
+<td><span class="label label-info">关注:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">fork 一份:</span></td>
+<td><a class="label" href="">1</a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">创建issuse:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+</table>
+
+以上表单，当前未完成，需要查看代码请进入
+<a href="http://github.com/snyh/toy/tree/master/war3" target="_blank">github查看</a>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>

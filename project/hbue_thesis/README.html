@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+<meta name="keywords" content="湖北经济学院,hbue,latex,毕业论文,模板">
+<title> snyh hbue_thesis </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<h1 id="latex">湖北经济学院本科毕业论文 latex模板</h1>
+
+<p>在网上没有找到学校的latex模板故此制作了一份，
+整体框架已经搭建完成。</p>
+
+<p>依赖xelatex和xeCJK宏包, 
+默认字体为Adobe的四套字体, linux下可以选择安装,
+如果是win系统则用”win”搜索data/hbue.cls文件去掉对应注释使用系统自带的字体.</p>
+
+<p>main.pdf是生成的文件, content内的文件是样章, 论文比较烂, 丟上来主要是给不
+太熟悉latex的朋友起一个借鉴作用.</p>
+
+<h2 id="section">使用方式:</h2>
+<ol>
+  <li>make init; 以便建立初始化目录</li>
+  <li>修改info.tex 内容为自己的信息</li>
+  <li>在content目录下建立自己的章节内容</li>
+  <li>make; 默认编译毕业论文, 若make report则编译开题报告</li>
+  <li>main.pdf或者report.pdf就是生成的最终文件了. </li>
+</ol>
+
+<h2 id="section-1">提示:</h2>
+<ul>
+  <li>如果需要使用更新目录则需要编译2次(也就是make2次)</li>
+  <li>章节文件使用\chapter{章节名称}或者\chapter*{章节名称}后者不会在目录中出现.</li>
+  <li>如果是evince等pdf阅读器可以不打开根目录下的pdf文件而是打开.tmp/main.pdf这个
+  pdf文件,这样你每次修改 make之后evince可以马上更新效果,对于调式非常方便.</li>
+  <li>默认的Makefile文件是建立.tmp临时目录处理中间文件防止根目录下文件过多,</li>
+</ul>
+
+<h2 id="section-2">目录结构</h2>
+<pre><code>.
+|-- figure //存放图表的目录，可自由安排
+|   `-- filemanger.eps
+|-- content    //论文正文，这里面的内容是用户需要撰写的正文
+|   |-- abstract.aux
+|   |-- abstract.tex
+|   |-- filemanager.aux
+|   |-- filemanager.tex
+|   |-- filespec.tex
+|   |-- introduce.aux
+|   |-- introduce.tex
+|   |-- protocol.tex
+|   `-- workaround.tex
+|-- data   //模板数据不需要更改
+|   |-- cover.tex  //封面
+|   |-- hbue.cls //模板文件
+|   |-- images
+|   |   |-- badge2.png
+|   |   `-- badge.png
+|   `-- report_imp.tex //开题报告模板
+|-- info.tex //在这里提供个人信息导师信息等。
+|-- main.tex //主文件，用来链接各部分
+|-- Makefile //方便编译
+|-- report.tex //开题报告、文献综述
+`-- README
+</code></pre>
+
+
+
+</div>
+
+<div class="span3">
+
+
+<table class="table table-brodered">
+<thead><h4>hbue_thesis信息</h4></thead>
+
+<tr>
+<td><span class="label">可执行文件:</span></td>
+<td>
+
+<div class="btn-group">
+<a class="btn" href="#">选择版本</a>
+<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#">windows</a></li>
+<li><a href="#">linux</a></li>
+</ul>
+</div>
+
+</td>
+</tr>
+
+
+
+<tr>
+<td><span class="label label-info">关注:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">fork 一份:</span></td>
+<td><a class="label" href="">1</a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">创建issuse:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+</table>
+
+以上表单，当前未完成，需要查看代码请进入
+<a href="http://github.com/snyh/hbue_thesis" target="_blank">github查看</a>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="snyh">
+<meta name="keywords" content="android,aosp,repo,DownloadError">
+<title> snyh android 源码下载 </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<span><strong>android 源码下载</strong></span> 
+<small>2012-04-29 00:00:00 +0800</small>
+
+<hr>
+<p>这段时间在看android的framework和launcher2，还比较顺利。
+但因为要重新编译framework.jar打开隐藏的api否则launcher2里面很多成员无法访问。</p>
+
+<p>代码下载按照官方给出的步骤即可(当然是linux之类的环境)
+首先获取repo工具，这个是方便集中下载多个git源的。</p>
+
+<pre><code>$ curl https://dl-ssl.google.com/dl/googlesource/git-repo/repo &gt; ~/bin/repo
+$ chmod a+x ~/bin/repo
+</code></pre>
+
+<p>然后初始化和同步</p>
+
+<pre><code>$ repo init -u https://android.googlesource.com/platform/manifest
+$ repo sync
+</code></pre>
+
+<p>repo命令并不复杂，不带参数运行repo</p>
+
+<pre><code>usage: repo COMMAND [ARGS]
+The most commonly used repo commands are:
+  abandon      Permanently abandon a development branch
+  branch       View current topic branches
+  branches     View current topic branches
+  checkout     Checkout a branch for development
+  cherry-pick  Cherry-pick a change.
+  diff         Show changes between commit and working tree
+  download     Download and checkout a change
+  grep         Print lines matching a pattern
+  init         Initialize repo in the current directory
+  list         List projects and their associated directories
+  prune        Prune (delete) already merged topics
+  rebase       Rebase local branches on upstream branch
+  smartsync    Update working tree to the latest known good revision
+  stage        Stage file(s) for commit
+  start        Start a new branch for development
+  status       Show the working tree status
+  sync         Update working tree to the latest revision
+  upload       Upload changes for code review
+
+See 'repo help &lt;command&gt;' for more information on a specific command.
+See 'repo help --all' for a complete list of recognized commands.
+</code></pre>
+
+<p>也可以查看单独的子命令帮助如 repo help init 之类的。</p>
+
+<p>本来一起进行的都挺顺利的，但下到95%之后就卡主了。
+每次都是DownloadError: …. Connection timed out。
+因为主要任务还是看android的framework所以没怎么着手解决这个，但一拖就是一个星期。
+之前心里还以为是校园网的原因，所以每天都repo sync试试。</p>
+
+<p>按照网上所说的https改http, git改http都无效，也按照官方的提示使用~/.netrc加入验证机制防止
+IP的流量超过配额，但均无任何效果。</p>
+
+<p>今天下午去吃饭结果食堂灯都没开，因为没带任何可以显示时间的工具，我还以为自己又把时间弄错了。
+最后转了一圈发现五一放假了，学校的“三清观”不营业了，不过还好“一粟庵”还有吃的。
+打饭回来又继续repo sync本想着刚才更新系统速度爆快(3~4Mb/s教育网源)，这次应该能成吧。
+可还是无情的给出timeout，在我内心无数次臭骂google之后，还是决定技术解决。</p>
+
+<p>首先要找出出现timeout的地址，</p>
+
+<pre><code>[snyh@snyh repo]$ ack DownloadError
+main.py
+41:from error import DownloadError
+149:    except DownloadError, e:
+
+error.py
+60:class DownloadError(Exception):
+
+project.py
+40:from error import DownloadError
+1526:          raise DownloadError('HTTP %s%s' % (e.code, msg))
+1528:          raise DownloadError('%s: %s ' % (req.get_host(), str(e)))
+</code></pre>
+
+<p>发现只有2处会抛出DownloadError异常,而且很明显是第二个把req.get_host()改为rep.get_full_url()就行了。</p>
+
+<p>再次repo sync等一会让错误打印出来</p>
+
+<pre><code>DownloadError: http://android.googlesource.com/platform/prebuilt/clone.bundle: &lt;urlopen error [Errno 110] Connection timed out&gt; 
+</code></pre>
+
+<p>使用游览器访问这个地址失败，去掉clone.bundle之后访问成功。
+一开始以为是repo错误的加上了clone.bundle所以修改project.py和repo中去掉这个逻辑(之前return False即可)。
+修改之后不使用git 的bundle下载。 然后继续repo sync成功。 修改部分。</p>
+
+<pre><code>diff --git a/repo b/repo
+index 2a13af5..597af5c 100755
+--- a/repo
++++ b/repo
+@@ -347,6 +347,7 @@ def _Fetch(url, local, src, quiet):
+     raise CloneFailure()
+ 
+ def _DownloadBundle(url, local, quiet):
++  return False
+   if not url.endswith('/'):
+     url += '/'
+   url += 'clone.bundle'
+
+
+diff --git a/project.py b/project.py
+index 8b9a3fc..a396705 100644
+--- a/project.py
++++ b/project.py
+@@ -1441,6 +1441,7 @@ class Project(object):
+     return ok
+ 
+   def _ApplyCloneBundle(self, initial=False, quiet=False):
++    return False
+     if initial and self.manifest.manifestProject.config.GetString('repo.depth'):
+       return False
+</code></pre>
+
+<p>10分钟不到的事情，结果因为之前抱着侥幸的心理导致一个星期都没搞定。最后突然意识到地址给墙了吧。
+然后使用curl -I查看地址。</p>
+
+<pre><code>[snyh@snyh repo]$ curl -I  http://android.googlesource.com/platform/prebuilt/clone.bundle
+HTTP/1.1 307 unknown
+Expires: Fri, 01 Jan 1990 00:00:00 GMT
+Pragma: no-cache
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Date: Sun, 29 Apr 2012 12:44:20 GMT
+Location: http://cache.pack.google.com/edgedl/googlesource/android/ics.1-hqfn9xlosu46/platform-prebuilt.bundle
+Content-Type: text/plain; charset=UTF-8
+Content-Length: 1
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Server: GSE
+</code></pre>
+
+<p>访问http://cache.pack.google.com/edgedl/googlesource/android/ics.1-hqfn9xlosu46/platform-prebuilt.bundle果然无效。
+直接google “cache.pack.google.com host” ，然后在/etc/hosts中加入找到的IP(请自行检测IP是否仍然有效)</p>
+
+<pre><code>203.208.46.172 cache.pack.google.com
+</code></pre>
+
+<p>最后恢复之前修改的代码(如果没有可用IP则可以不修改，不使用bundle方式同步)</p>
+
+<pre><code>cd .repo; git checkout .; cd ..; repo sync
+</code></pre>
+
+
+<hr>
+<ul class="pager">
+
+
+<li class="previous"><a href="/blog/2012/03/29/resume.html">个人简历</a></li>
+
+
+
+<li class="next"><a href="#">Nothing</a></li>
+
+
+</ul>
+
+
+</div>
+<div class="span3">
+<div class="slidebar span3">
+	<div class="">
+	<h3>标签云</h3>
+
+				<a href="/blog/tags/DownloadError">
+					<span style="font-size:75%">DownloadError</span> 
+				</a>
+				
+				<a href="/blog/tags/android">
+					<span style="font-size:75%">android</span> 
+				</a>
+				
+				<a href="/blog/tags/aosp">
+					<span style="font-size:75%">aosp</span> 
+				</a>
+				
+				<a href="/blog/tags/project">
+					<span style="font-size:75%">project</span> 
+				</a>
+				
+				<a href="/blog/tags/repo">
+					<span style="font-size:75%">repo</span> 
+				</a>
+				
+				<a href="/blog/tags/resume">
+					<span style="font-size:75%">resume</span> 
+				</a>
+				
+				<a href="/blog/tags/snyh">
+					<span style="font-size:75%">snyh</span> 
+				</a>
+				
+				<a href="/blog/tags/test">
+					<span style="font-size:177%">test</span> 
+				</a>
+				
+	</div>
+
+	<div class="">
+	<h3>文章分类</h3>
+<a href="/blog/category/android">android <strong>(1)</strong></a><br/><a href="/blog/category/test">test <strong>(2)</strong></a><br/><a href="/blog/category/其他">其他 <strong>(1)</strong></a><br/>
+	</div>
+
+	<div class="">
+	<h3>文章归档</h3>
+<a href="/blog/2012#m4">2012/4 <strong>(1)</strong></a><br/><a href="/blog/2012#m3">2012/3 <strong>(3)</strong></a><br/>
+	</div>
+</div>
+
+
+<div style="padding:50px 0px 0px 25px">
+<script type="text/javascript" charset="utf-8">
+(function(){
+ var _w = "100%" , _h = 500;
+ var param = {
+        url:location.href,
+        width:'0',
+        height:'500',
+        appkey:'4215081593', /**您申请的应用app     key,显示分享来源(可选)*/
+        border:'1',/**是否显示边框*/
+        skin:'1',
+        titlebar:'1',/**是否显示标题栏*/
+        colordiy:'1',/**是å¦自定义样式*/
+        color: 'E0E0E0,E0E0E0,000000,00B7EF,E0E0E0,353535',
+        rnd:new Date().valueOf(),
+        dpc:1
+ }
+ var temp = [];
+ for (var p in param){
+    temp.push(p + '=' + encodeURIComponent( param[p] || '' ) )
+ }
+ document.write('<iframe allowTransparency="true" frameborder="0" scrolling="no" src="http://widget.weibo.com/distribution/comments.php?' + temp.join('&') + '" width="'+ _w+'" height="'+_h+'"></iframe>')
+ })()
+</script>
+</div>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>

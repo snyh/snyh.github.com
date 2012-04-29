@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+<meta name="keywords" content="">
+<title> snyh led_matirx </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<p>不记得是几年前暑假尝试写的一个LED走字屏相关的程序.
+不过只刚刚起步就没做了, 当时能力有限吧, 不过如果好好做也应该能完成的.</p>
+
+<p>那时候专业是嵌入式接触这方面的东西比较多, 本打算是做一个linux下的走字屏,
+先写一个字模软件生成数据, 然后通过界面进行展示并做一些效果. 最后通过
+和单片机上编写的程序进行通讯进行数据烧录.</p>
+
+<p>现在看来字幕生成是完成了单独放在draw_words这个小toy里面在, 展示界面也做
+了一点只是在换字的时候会有问题, 当时对数据结构算法什么的一点都不了解所以
+做那一块出了问题.  </p>
+
+<p>烧录程序和效果制作都完全没有开始,</p>
+
+<p>现在看来其实都挺简单的, 烧录用asio的serial可以做到跨平台不用限定死在linux下
+只是单片机那边好久没碰过了但熟悉一下也能很快恢复起来的.</p>
+
+<p>单片机方面去年打算做一个用遥控器控制的俄罗斯方块游戏, 在proteus里面已经完成
+一半了可以绘制方块消除方块, 不过当时仿真红外的时候出了麻烦, 因为是仿真而且仿真
+软件还是通过wine模拟跑的&gt;_&lt;, 加上两边都不稳定所以总调试不出来, 如果有一边是
+用实物进行调式就很简单了. 只是觉得那个老师有点不正常不想过多接触就没去实验室
+做。</p>
+
+<p>虽然学了这么多年嵌入式，但自己似乎还是没天赋，在这方面没做出过任何完整的
+东西来。唯一一次自己满意的是有年实训,内容是根据给的protel文件进行学习然后
+在做好的板子上进行焊接. 不过我当时没有看那个文件, 直接通过需要完成的功能(好像
+红绿灯)在proteus里面进行仿真和PCB图的排线, 可惜当时根本就不整理文件东西都是
+乱丢的.</p>
+
+
+
+<h3>程序部分截图</h3>
+<ul class="thumbnails">
+
+<a href="#" class="thumbnail">
+<img src="主界面.png" title="主界面.png" />
+</a>
+
+
+</div>
+
+<div class="span3">
+
+
+<table class="table table-brodered">
+<thead><h4>led_matirx信息</h4></thead>
+
+<tr>
+<td><span class="label">可执行文件:</span></td>
+<td>
+
+<div class="btn-group">
+<a class="btn" href="#">选择版本</a>
+<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#">windows</a></li>
+<li><a href="#">linux</a></li>
+</ul>
+</div>
+
+</td>
+</tr>
+
+
+
+<tr>
+<td><span class="label label-info">关注:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">fork 一份:</span></td>
+<td><a class="label" href="">1</a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">创建issuse:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+</table>
+
+以上表单，当前未完成，需要查看代码请进入
+<a href="http://github.com/snyh/toy/tree/master/led_matirx" target="_blank">github查看</a>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>

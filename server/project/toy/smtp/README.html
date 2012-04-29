@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+<meta name="keywords" content="smtp,ssl,gmail,C++">
+<title> snyh smtp </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<p>寒假实习无聊写的一个SMTP发邮件的小程序,
+功能很不完善, 当时刚刚接触ASIO.
+可以实现gmail邮件的发送也就是支持SSL.</p>
+
+<p>主要是一个发送代理构造函数如下
+UserAgent(std::string smtp_host, std::string pop_host,
+		  std::string user, std::string password,
+		  std::string pop_port=”110”, std::string smtp_port=”25”, 
+		  bool tls=false);
+只有三组函数分别用来发送邮件获取邮件和获取邮件列表
+void async_sendmail(Mail&amp; m, SendHandler  handle);
+std::string sendmail(Mail&amp; m);</p>
+
+<p>void async_listmail(ListHandler handler);
+void listMail(MailList&amp; l);</p>
+
+<p>void async_fetchmail(int n, FetchHandler);
+void fetchmail(int n, Mail&amp; m);
+和一个Mail结构,构造函数如下
+Mail(std::string from, 
+	 std::string tos, 
+	 std::string subject=””,
+	 std::string data=””);</p>
+
+<p>以下是测试内容, 使用QQ邮箱和Gmail邮箱, 敏感信息我稍微处理了下</p>
+
+<p>end
+Send:EHLO 127.0.0.1</p>
+
+<p>Send:USER 1399611909@qq.com</p>
+
+<p>250 8BITMIMERESSLAINom
+Send:AUTH LOGIN</p>
+
+<p>Recive:+OK
+Send:PASS 密码</p>
+
+<p>Recive:334 VXNlcm5hbWU6
+Send:密码的Base64编码</p>
+
+<p>Recive:+OK
+Send:STAT</p>
+
+<p>Recive:334 UGFzc3dvcmQ6
+Send:eGlhYmluMzIx</p>
+
+<p>Recive:+OK 2 3662
+Num: 2
+Send:TOP 1 0</p>
+
+<p>Recive:235 Authentication successful
+Send:MAIL FROM:<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#049;&#051;&#057;&#057;&#054;&#049;&#049;&#057;&#048;&#057;&#064;&#113;&#113;&#046;&#099;&#111;&#109;">&#049;&#051;&#057;&#057;&#054;&#049;&#049;&#057;&#048;&#057;&#064;&#113;&#113;&#046;&#099;&#111;&#109;</a></p>
+
+<p>Recive:250 Ok
+Send:RCPT TO:<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#115;&#110;&#121;&#104;&#064;&#115;&#110;&#121;&#104;&#046;&#111;&#114;&#103;">&#115;&#110;&#121;&#104;&#064;&#115;&#110;&#121;&#104;&#046;&#111;&#114;&#103;</a></p>
+
+<p>Recive:250 Ok
+Send:DATA</p>
+
+<p>.his is a multi-part message in MIME format.F@qq.com&gt;76E5DD”
+Send:TOP 2 0</p>
+
+<p>Recive:354 End data with <cr><lf>.<cr><lf>
+Send:From:1399611909@qq.com
+To:snyh@snyh.org
+Subject:test_title
+MIME-Version: 1.0</lf></cr></lf></cr></p>
+
+<p>data:test
+.</p>
+
+<p>Recive:250 Ok: queued as 
+250 Ok: queued as 
+test start
+Received-SPF: pass (google.com: domain of snyh1010@gmail.com designates 10.182.1Authentication-Results: mr.google.com; spf=pass (google.com: domain of snyh1010@gmail.com designates 10.182.159.105 as permitted sender) smtp.mail=snyh1010@gmai        by 10.182.159.105 with SMTP id xb9mr10064332obb.63.1331049403868 (num_ho.xxxxxxxxxxsnyh.org010@gmail.com&gt;0800 (PST).google.com&gt;9.2012.03.06.07.56.37Z
+Send:QUIT
+Send:EHLO 127.0.0.1</p>
+
+<p>250 ENHANCEDSTATUSCODESAUTH your service, [58.55.77.198]
+Send:AUTH LOGIN</p>
+
+<p>Recive:334 VXNlcm5hbWU6
+Send: 密码的base64编码</p>
+
+<p>Recive:334 UGFzc3dvcmQ6
+Send:eGlhYmluYGBg</p>
+
+<p>Recive:235 2.7.0 Accepted
+Send:MAIL FROM:<snyh1010 /></p>
+
+<p>Recive:250 2.1.0 OK f8sm793600oec.9
+Send:RCPT TO:<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#049;&#051;&#057;&#057;&#054;&#049;&#049;&#057;&#048;&#057;&#064;&#113;&#113;&#046;&#099;&#111;&#109;">&#049;&#051;&#057;&#057;&#054;&#049;&#049;&#057;&#048;&#057;&#064;&#113;&#113;&#046;&#099;&#111;&#109;</a></p>
+
+<p>Recive:250 2.1.5 OK f8sm793600oec.9
+Send:DATA</p>
+
+<p>Recive:354  Go ahead f8sm793600oec.9
+Send:From:snyh1010@gmail.com
+To:1399611909@qq.com
+Subject:test_title
+MIME-Version: 1.0</p>
+
+<p>data:test
+.</p>
+
+
+
+</div>
+
+<div class="span3">
+
+
+<table class="table table-brodered">
+<thead><h4>smtp信息</h4></thead>
+
+<tr>
+<td><span class="label">可执行文件:</span></td>
+<td>
+
+<div class="btn-group">
+<a class="btn" href="#">选择版本</a>
+<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#">windows</a></li>
+<li><a href="#">linux</a></li>
+</ul>
+</div>
+
+</td>
+</tr>
+
+
+
+<tr>
+<td><span class="label label-info">关注:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">fork 一份:</span></td>
+<td><a class="label" href="">1</a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">创建issuse:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+</table>
+
+以上表单，当前未完成，需要查看代码请进入
+<a href="http://github.com/snyh/toy/tree/master/smtp" target="_blank">github查看</a>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>

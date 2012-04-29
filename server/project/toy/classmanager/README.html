@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+<meta name="keywords" content="ruby on rails,班级管理">
+<title> snyh classmanager </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<p>== classmanager
+由于隐私原因在添加到git的时候没有上传数据库文件。
+这是帮同学写的几个页面好交差所以接触了rails与ruby，
+感觉比django+python要好用，但ruby的运行效率实在太慢。</p>
+
+<p>以下内容为rails自动生成的默认文档</p>
+
+<p>== Welcome to Rails</p>
+
+<p>Rails is a web-application framework that includes everything needed to create
+database-backed web applications according to the Model-View-Control pattern.</p>
+
+<p>This pattern splits the view (also called the presentation) into “dumb”
+templates that are primarily responsible for inserting pre-built data in between
+HTML tags. The model contains the “smart” domain objects (such as Account,
+Product, Person, Post) that holds all the business logic and knows how to
+persist themselves to a database. The controller handles the incoming requests
+(such as Save New Account, Update Product, Show Post) by manipulating the model
+and directing data to the view.</p>
+
+<p>In Rails, the model is handled by what’s called an object-relational mapping
+layer entitled Active Record. This layer allows you to present the data from
+database rows as objects and embellish these data objects with business logic
+methods. You can read more about Active Record in
+link:files/vendor/rails/activerecord/README.html.</p>
+
+<p>The controller and view are handled by the Action Pack, which handles both
+layers by its two parts: Action View and Action Controller. These two layers
+are bundled in a single package due to their heavy interdependence. This is
+unlike the relationship between the Active Record and Action Pack that is much
+more separate. Each of these packages can be used independently outside of
+Rails. You can read more about Action Pack in
+link:files/vendor/rails/actionpack/README.html.</p>
+
+<p>== Getting Started</p>
+
+<ol>
+  <li>
+    <p>At the command prompt, create a new Rails application:
+    <tt>rails new myapp</tt> (where <tt>myapp</tt> is the application name)</p>
+  </li>
+  <li>
+    <p>Change directory to <tt>myapp</tt> and start the web server:
+    <tt>cd myapp; rails server</tt> (run with –help for options)</p>
+  </li>
+  <li>
+    <p>Go to http://localhost:3000/ and you’ll see:
+    “Welcome aboard: You’re riding Ruby on Rails!”</p>
+  </li>
+  <li>
+    <p>Follow the guidelines to start developing your application. You can find
+the following resources handy:</p>
+  </li>
+</ol>
+
+<ul>
+  <li>The Getting Started Guide: http://guides.rubyonrails.org/getting_started.html</li>
+  <li>Ruby on Rails Tutorial Book: http://www.railstutorial.org/</li>
+</ul>
+
+<p>== Debugging Rails</p>
+
+<p>Sometimes your application goes wrong. Fortunately there are a lot of tools that
+will help you debug it and get it back on the rails.</p>
+
+<p>First area to check is the application log files. Have “tail -f” commands
+running on the server.log and development.log. Rails will automatically display
+debugging and runtime information to these files. Debugging info will also be
+shown in the browser on requests from 127.0.0.1.</p>
+
+<p>You can also log your own messages directly into the log file from your code
+using the Ruby logger class from inside your controllers. Example:</p>
+
+<p>class WeblogController &lt; ActionController::Base
+    def destroy
+      @weblog = Weblog.find(params[:id])
+      @weblog.destroy
+      logger.info(“#{Time.now} Destroyed Weblog ID ##{@weblog.id}!”)
+    end
+  end</p>
+
+<p>The result will be a message in your log file along the lines of:</p>
+
+<p>Mon Oct 08 14:22:29 +1000 2007 Destroyed Weblog ID #1!</p>
+
+<p>More information on how to use the logger is at http://www.ruby-doc.org/core/</p>
+
+<p>Also, Ruby documentation can be found at http://www.ruby-lang.org/. There are
+several books available online as well:</p>
+
+<ul>
+  <li>Programming Ruby: http://www.ruby-doc.org/docs/ProgrammingRuby/ (Pickaxe)</li>
+  <li>Learn to Program: http://pine.fm/LearnToProgram/ (a beginners guide)</li>
+</ul>
+
+<p>These two books will bring you up to speed on the Ruby language and also on
+programming in general.</p>
+
+<p>== Debugger</p>
+
+<p>Debugger support is available through the debugger command when you start your
+Mongrel or WEBrick server with –debugger. This means that you can break out of
+execution at any point in the code, investigate and change the model, and then,
+resume execution! You need to install ruby-debug to run the server in debugging
+mode. With gems, use <tt>sudo gem install ruby-debug</tt>. Example:</p>
+
+<p>class WeblogController &lt; ActionController::Base
+    def index
+      @posts = Post.all
+      debugger
+    end
+  end</p>
+
+<p>So the controller will accept the action, run the first line, then present you
+with a IRB prompt in the server window. Here you can do things like:</p>
+
+<blockquote>
+  <blockquote>
+    <p>@posts.inspect
+  =&gt; “[#&lt;Post:0x14a6be8
+          @attributes={“title”=&gt;nil, “body”=&gt;nil, “id”=&gt;”1”}&gt;,
+       #&lt;Post:0x14a6620
+          @attributes={“title”=&gt;”Rails”, “body”=&gt;”Only ten..”, “id”=&gt;”2”}&gt;]”
+@posts.first.title = “hello from a debugger”
+  =&gt; “hello from a debugger”</p>
+  </blockquote>
+</blockquote>
+
+<p>…and even better, you can examine how your runtime objects actually work:</p>
+
+<blockquote>
+  <blockquote>
+    <p>f = @posts.first
+  =&gt; #&lt;Post:0x13630c4 @attributes={“title”=&gt;nil, “body”=&gt;nil, “id”=&gt;”1”}&gt;
+f.
+  Display all 152 possibilities? (y or n)</p>
+  </blockquote>
+</blockquote>
+
+<p>Finally, when you’re ready to resume execution, you can enter “cont”.</p>
+
+<p>== Console</p>
+
+<p>The console is a Ruby shell, which allows you to interact with your
+application’s domain model. Here you’ll have all parts of the application
+configured, just like it is when the application is running. You can inspect
+domain models, change values, and save to the database. Starting the script
+without arguments will launch it in the development environment.</p>
+
+<p>To start the console, run <tt>rails console</tt> from the application
+directory.</p>
+
+<p>Options:</p>
+
+<ul>
+  <li>Passing the <tt>-s, –sandbox</tt> argument will rollback any modifications
+made to the database.</li>
+  <li>Passing an environment name as an argument will load the corresponding
+environment. Example: <tt>rails console production</tt>.</li>
+</ul>
+
+<p>To reload your controllers and models after launching the console run
+<tt>reload!</tt></p>
+
+<p>More information about irb can be found at:
+link:http://www.rubycentral.org/pickaxe/irb.html</p>
+
+<p>== dbconsole</p>
+
+<p>You can go to the command line of your database directly through <tt>rails
+dbconsole</tt>. You would be connected to the database with the credentials
+defined in database.yml. Starting the script without arguments will connect you
+to the development database. Passing an argument will connect you to a different
+database, like <tt>rails dbconsole production</tt>. Currently works for MySQL,
+PostgreSQL and SQLite 3.</p>
+
+<p>== Description of Contents</p>
+
+<p>The default directory structure of a generated Ruby on Rails application:</p>
+
+<p>|– app
+  |   |– assets
+  |       |– images
+  |       |– javascripts
+  |       <code>-- stylesheets
+  |   |-- controllers
+  |   |-- helpers
+  |   |-- mailers
+  |   |-- models
+  |   </code>– views
+  |       <code>-- layouts
+  |-- config
+  |   |-- environments
+  |   |-- initializers
+  |   </code>– locales
+  |– db
+  |– doc
+  |– lib
+  |   <code>-- tasks
+  |-- log
+  |-- public
+  |-- script
+  |-- test
+  |   |-- fixtures
+  |   |-- functional
+  |   |-- integration
+  |   |-- performance
+  |   </code>– unit
+  |– tmp
+  |   |– cache
+  |   |– pids
+  |   |– sessions
+  |   <code>-- sockets
+  </code>– vendor
+      |– assets
+          <code>-- stylesheets
+      </code>– plugins</p>
+
+<p>app
+  Holds all the code that’s specific to this particular application.</p>
+
+<p>app/assets
+  Contains subdirectories for images, stylesheets, and JavaScript files.</p>
+
+<p>app/controllers
+  Holds controllers that should be named like weblogs_controller.rb for
+  automated URL mapping. All controllers should descend from
+  ApplicationController which itself descends from ActionController::Base.</p>
+
+<p>app/models
+  Holds models that should be named like post.rb. Models descend from
+  ActiveRecord::Base by default.</p>
+
+<p>app/views
+  Holds the template files for the view that should be named like
+  weblogs/index.html.erb for the WeblogsController#index action. All views use
+  eRuby syntax by default.</p>
+
+<p>app/views/layouts
+  Holds the template files for layouts to be used with views. This models the
+  common header/footer method of wrapping views. In your views, define a layout
+  using the <tt>layout :default</tt> and create a file named default.html.erb.
+  Inside default.html.erb, call &lt;% yield %&gt; to render the view using this
+  layout.</p>
+
+<p>app/helpers
+  Holds view helpers that should be named like weblogs_helper.rb. These are
+  generated for you automatically when using generators for controllers.
+  Helpers can be used to wrap functionality for your views into methods.</p>
+
+<p>config
+  Configuration files for the Rails environment, the routing map, the database,
+  and other dependencies.</p>
+
+<p>db
+  Contains the database schema in schema.rb. db/migrate contains all the
+  sequence of Migrations for your schema.</p>
+
+<p>doc
+  This directory is where your application documentation will be stored when
+  generated using <tt>rake doc:app</tt></p>
+
+<p>lib
+  Application specific libraries. Basically, any kind of custom code that
+  doesn’t belong under controllers, models, or helpers. This directory is in
+  the load path.</p>
+
+<p>public
+  The directory available for the web server. Also contains the dispatchers and the
+  default HTML files. This should be set as the DOCUMENT_ROOT of your web
+  server.</p>
+
+<p>script
+  Helper scripts for automation and generation.</p>
+
+<p>test
+  Unit and functional tests along with fixtures. When using the rails generate
+  command, template test files will be generated for you and placed in this
+  directory.</p>
+
+<p>vendor
+  External libraries that the application depends on. Also includes the plugins
+  subdirectory. If the app has frozen rails, those gems also go here, under
+  vendor/rails/. This directory is in the load path.</p>
+
+
+
+<h3>程序部分截图</h3>
+<ul class="thumbnails">
+
+<a href="#" class="thumbnail">
+<img src="admin2.png" title="admin2.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="d_index.png" title="d_index.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="admin3.png" title="admin3.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="admin1.png" title="admin1.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="index.png" title="index.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="c_index.png" title="c_index.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="s_index.png" title="s_index.png" />
+</a>
+
+
+</div>
+
+<div class="span3">
+
+
+<table class="table table-brodered">
+<thead><h4>classmanager信息</h4></thead>
+
+<tr>
+<td><span class="label">可执行文件:</span></td>
+<td>
+
+<div class="btn-group">
+<a class="btn" href="#">选择版本</a>
+<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#">windows</a></li>
+<li><a href="#">linux</a></li>
+</ul>
+</div>
+
+</td>
+</tr>
+
+
+
+<tr>
+<td><span class="label label-info">关注:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">fork 一份:</span></td>
+<td><a class="label" href="">1</a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">创建issuse:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+</table>
+
+以上表单，当前未完成，需要查看代码请进入
+<a href="http://github.com/snyh/toy/tree/master/classmanager" target="_blank">github查看</a>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>

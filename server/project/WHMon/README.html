@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+<meta name="keywords" content="html,远程管理,教室管理,wt,c++">
+<title> snyh WHMon </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<h1 id="section">欢迎使用文华教室管理系统</h1>
+<p>此项目本身是为华中科技大学文化学院所定制的一款教室管理系统</p>
+
+<ul>
+  <li>可远程操作以便以最快速度解决老师上课时候的电脑操作问题</li>
+  <li>可以批量关机防止通过拉闸断电带来的问题</li>
+  <li>可发送特定消息</li>
+  <li>使用Web作为管理界面,界面样式和文字信息可以定制</li>
+  <li>教室端在安装的时候必须指定管理端的IP地址且只会响应这个IP地址的消息，防止此款
+ 软件变成木马程序。</li>
+  <li>支持分区管理。</li>
+  <li>支持用户权限分配。</li>
+</ul>
+
+<h1 id="section-1">使用手册</h1>
+
+<h2 id="section-2">安装程序</h2>
+<ol>
+  <li>教室端使用WHMonInstaller.exe进行安装,安装时候需要指定管理端的IP地址，
+ 若需要大批量安装可以修改源目录下的src/tool/nsis/whmon.nsi的安装脚本或自行
+ 编写脚本。</li>
+  <li>管理界面使用webgui.zip解压之后删除whmon.dat运行即可, whmon.dat内保存了教室
+ 端的IP和对应名称以及用户权限密码等。 第一次运行会要求设置admin的密码。</li>
+  <li>
+    <p>高级用户可以使用命令行运行以便进行灵活的管理，webgui.exe的参数如下</p>
+
+    <pre><code> webgui.exe --http-address 绑定的IP地址 --http-port 端口号 --docroot 资源路径
+</code></pre>
+  </li>
+  <li>
+    <p>若需要自己定制安装脚本可以参考whmon.nsi之后自行编写,其中server.exe(教室端)支
+持的参数如下</p>
+
+    <pre><code> My Email: snyh1010@gmail.com or snyh@snyh.org
+ options:
+   -h [ --help ]         help message
+   -p [ --port ] arg     local listen port (不要修改这个)
+   -i [ --ip ] arg       the ip which may control the app.
+                         used like this 
+                         -i 192.168.1.1 -i 192.168.1.2 -i 192.168.1.3 ...
+                         (接收的管理端的IP地址支持多个IP)
+   -n [ --name ] arg     classroom name (教室名称,如果是静态IP则可在管理端进行修改
+   --install             install this program  (注册相关信息到系统中)
+   --uninstall           uninstall this program  (卸载注册的信息)
+</code></pre>
+  </li>
+</ol>
+
+<h2 id="section-3">分区管理:</h2>
+<p>完成一般操作，通过选择列表里面的节点来发送消息和远程关机.
+选择节点的时候，可以通过按住CTRL 或者SHIFT组合键来快速选择。
+双击节点时，会动态打开节点的远程连接服务并生成临时密码。
+通过选择查看模式或协助模式来确定是否需要控制远程节点。
+点击取消之后动态关闭远程节点的远程连接服务以防止恶意连接。
+远程查看模式下可以通过面板上部的发送消息、关机、断开连接进行相应操
+作。面板下方有全屏模式(部分游览器全屏模式会出现无法使用右键情况，请
+使用alt+shit+左键替代，具体情况请参考弹出信息)
+离线节点也可进行连接(如果网络状况特别特别糟糕，可能会出现误判 
+几率非常小.理论上会出现但至今没有模拟出过)</p>
+
+<h2 id="section-4">区域设定: (需要有对应权限才会出现此模块)</h2>
+<p>双击节点进行节点资料修改。 其他功能参考面板上方对应按钮。
+状态列动态更新远程节点信息。</p>
+
+<h2 id="section-5">权限管理:</h2>
+
+<h3 id="section-6">拥有以下功能</h3>
+<ol>
+  <li>修改个人密码;</li>
+  <li>管理用户权限(超级管理员才会出现此功能);</li>
+  <li>添加用户、删除用户(超级管理员才会出现此功能);</li>
+</ol>
+
+<p>此系统使用简单的权限管理共三种角色超级管理员、管理员、普通用户</p>
+
+<ul>
+  <li>其中超级管理员拥有所有权限(但无法修改其他用户密码)</li>
+  <li>管理员可以修改所属区域的节点信息.</li>
+  <li>普通用户只能对节点进行查看(发送信息、关机、远程连接等)无法修改节点信息。
+除了超级管理员其他角色均受所属区域限制。</li>
+</ul>
+
+<h2 id="section-7">挂机锁功能:</h2>
+<p>点击面板右上角的倒三角按钮。出现设置挂机锁密码，设置密码后若要继续操作
+必须输入设置的临时密码(请不要将此密码设置为用户密码,通过一定手段是可以
+在本地找到此密码的) 或F5刷新页面重新登录。</p>
+
+<h2 id="section-8">定制界面</h2>
+<p>修改webgui.exe同目录下的whmon.xml里的内容就行了,需要使用utf8编码</p>
+
+<h2 id="bug">当前已知BUG:</h2>
+<ol>
+  <li>删除在线的节点之后无法接受节点发现包,服务器必须重启(但可以手动添加此节点，不影响使用)</li>
+  <li>区域设定部分 区域名如果太多，后面的名称将无法显示(超过差不多30个时)</li>
+  <li>一定几率出现Wt Internel Error 暂时未找到出错原因，出现时需要F5刷新页面</li>
+</ol>
+
+
+
+<h3>程序部分截图</h3>
+<ul class="thumbnails">
+
+<a href="#" class="thumbnail">
+<img src="挂机锁.png" title="挂机锁.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="发送信息.png" title="发送信息.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="登录界面.png" title="登录界面.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="修改密码.png" title="修改密码.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="建立链接.png" title="建立链接.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="管理界面1.png" title="管理界面1.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="远程操作1.png" title="远程操作1.png" />
+</a>
+
+<a href="#" class="thumbnail">
+<img src="客户端安装界面.png" title="客户端安装界面.png" />
+</a>
+
+
+</div>
+
+<div class="span3">
+
+
+<table class="table table-brodered">
+<thead><h4>WHMon信息</h4></thead>
+
+<tr>
+<td><span class="label">可执行文件:</span></td>
+<td>
+
+<div class="btn-group">
+<a class="btn" href="#">选择版本</a>
+<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#">windows</a></li>
+<li><a href="#">linux</a></li>
+</ul>
+</div>
+
+</td>
+</tr>
+
+
+
+<tr>
+<td><span class="label label-info">关注:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">fork 一份:</span></td>
+<td><a class="label" href="">1</a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">创建issuse:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+</table>
+
+以上表单，当前未完成，需要查看代码请进入
+<a href="http://github.com/snyh/WHMon" target="_blank">github查看</a>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>

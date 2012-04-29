@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+<meta name="keywords" content="http,c++,webgui,server">
+<title> snyh AppWebServer </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<h1 id="appwebserver">AppWebServer</h1>
+<p>AppWebServer(libawserver) is a mini http server for c++ application.</p>
+
+<h2 id="section">特点</h2>
+<ol>
+  <li>小巧，可以直接编译进用户程序中。</li>
+  <li>提供发行模式，可以将html/css/js等文件作为资源文件编译进程序中。</li>
+  <li>提供jsonp模式，方便用户逻辑和界面逻辑分离。</li>
+</ol>
+
+<h2 id="jsonp">JSONP约定</h2>
+<p>AWServer的jsonp部分准备作为qooxdoo的jsonp c++后端，因此在JSONP部分按照
+<a href="http://manual.qooxdoo.org/1.6.x/pages/communication/rpc.html?highlight=rpc">qooxdoo RPC</a>
+的规定。 
+但并不影响不了解qooxdoo的用户。
+JSONP部分使用分组的概念，后端提供的功能全部以Service为一组来提供。
+比如要提供一个获取系统信息的功能，就可以建立一个Service info然后设置</p>
+
+<pre><code>info.name = "服务名称"
+info.methods = {
+    "功能名1", 实现功能1的函数,
+    "功能名2", 实现功能2的函数,
+};
+</code></pre>
+
+<p>主要部分就是建立service以及确定需要提供哪些功能。</p>
+
+<p>建立好service之后，就能够在js里面调用</p>
+
+<pre><code>rpc("服务名称", "方法名称", 参数部分, 回调函数);
+</code></pre>
+
+<p>其中rpc可以使用jquery和json2.js来实现</p>
+
+<pre><code>function rpc(s, m, d, f) {
+    $.getJSON("/rpc.cgi",
+              encodeURI(JSON.stringfy({service: s, method: m, params: d, id: 0})),
+              function(response) { f(response); }
+             );
+}
+</code></pre>
+
+<h2 id="section-1">例子</h2>
+<p>建立service部分的代码使用了c++11 的init list语法，
+如果无法使用c++11则请使用其他方式建立service。
+Service的原型为:</p>
+
+<pre><code>typedef std::function&lt;JSON(const JSON&amp;)&gt; Method;
+struct Service {
+	std::string name;
+	std::map&lt;std::string, Method&gt; methods;
+};
+</code></pre>
+
+<p>代码:</p>
+
+<pre><code>#include &lt;AWServer.hpp&gt;
+void init(AwServer::JSONPServer&amp; rpc) {
+    AWServer::Service info; //建立一个service
+    info.name = "systeminfo";
+    info.methods = {
+        "cpuinfo", [](AWServer::JSON&amp; request) {
+            AWServer::JSON response;
+            response = "龙芯2";
+            return response;
+        },
+        "meminfo", [](AWServer::JSON&amp; request) {
+            response["总量"] = "3G";
+            response["剩余"] = "1.7G";
+            return response;
+        }
+    };
+
+    rpc.install_service(info); //安装上面建立的这个service
+}
+
+int main()
+{
+  AWServer::JSONPServer rpc; //创建一个jsonpserver
+  init();  //安装service
+
+  AWServer::HTTPServer s; //创建一个httpserver
+  s.set_rpc(rpc); // 将之前建立的rpc_server加入httpserver中
+
+  s.open_browser();  //打开游览器
+
+  s.run(); //开始运行AWServer
+  return 0;
+}
+</code></pre>
+
+
+
+</div>
+
+<div class="span3">
+
+
+<table class="table table-brodered">
+<thead><h4>AppWebServer信息</h4></thead>
+
+<tr>
+<td><span class="label">可执行文件:</span></td>
+<td>
+
+<div class="btn-group">
+<a class="btn" href="#">选择版本</a>
+<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#">windows</a></li>
+<li><a href="#">linux</a></li>
+</ul>
+</div>
+
+</td>
+</tr>
+
+
+
+<tr>
+<td><span class="label label-info">关注:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">fork 一份:</span></td>
+<td><a class="label" href="">1</a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">创建issuse:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+</table>
+
+以上表单，当前未完成，需要查看代码请进入
+<a href="http://github.com/snyh/AppWebServer" target="_blank">github查看</a>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>

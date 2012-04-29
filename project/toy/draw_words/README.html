@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+<meta name="keywords" content="字模,freetype,c/c++">
+<title> snyh draw_words </title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/page.css">
+
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+<link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="/assets/img/favicon.png">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+
+<div class="container">
+
+<a class="brand" href=""> snyh.org </a>
+
+<ul class="nav">
+
+<li><a href=/>主页</a></li>
+
+<li><a href=/blog/>记录</a></li>
+
+<li><a href=/album/>往夕</a></li>
+
+<li><a href=/project/>实验田</a></li>
+
+<li><a href=/about.html>关于</a></li>
+
+</ul>
+
+<div class="pull-right">
+
+<!-- JiaThis Button BEGIN -->
+<span id="jiathis_style_32x32">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_kaixin001"></a>
+	<a class="jiathis_button_douban"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_pdfonline"></a>
+	<a href="http://www.jiathis.com/share?uid=1584728" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</span>
+<!-- JiaThis Button END -->
+
+<input type="text" class="search-query" placeholder="Search">
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="span9">
+<p>字模数据生成.</p>
+
+<p>较早写的一个小程序, 主要是给另外一个程序做数据生成用的.
+使用freetype2读取数据</p>
+
+<p>支持任何大部分字体, 默认直接打印出字体的图样到console, 
+如果指定输出文件则输出字模数据到指定文件.</p>
+
+<p>需要指定字体文件默认使用./font/wqy.tty
+由于字体文件较大所以没有上传上来.</p>
+
+<h2 id="section">默认帮助信息</h2>
+<pre><code>This program convert letter to matrix data
+Usage: gend [OPTION]... [STRING]...
+-i, --input-file &lt;arg&gt;    file will used convert
+                          default used the STRING
+-o, --output-file &lt;arg&gt;   file will be write the matrix data
+                          default file is 'output'
+-f, --font &lt;path&gt;         use which font
+-s, --size &lt;arg&gt;          only use for display
+-q, --quiet               don't display used for shell
+-h, --help                print this help text
+</code></pre>
+
+<h2 id="gen-snyh-">”./gen snyh” 的输出结果</h2>
+
+<pre><code>OOOOO
+O    
+O    
+OOOO 
+   OO
+   OO
+OOOO 
+
+OOOOO 
+OO  OO
+O   OO
+O   OO
+O   OO
+O   OO
+O   OO
+
+O    OO
+OO  OO 
+OO  OO 
+ OOOO  
+ OOOO  
+  OO   
+  OO   
+  OO   
+ OO    
+OO     
+
+O     
+O     
+O     
+O     
+OOOOO 
+OO  OO
+O   OO
+O   OO
+O   OO
+O   OO
+O   OO
+</code></pre>
+
+<h2 id="section-1">输出的数据文件:</h2>
+
+<pre><code>0x78, 0x80, 0x80, 0x70, 0x08, 0x08, 0xf0, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x69, 0x82, 0x00, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+
+0xb8, 0xc4, 0x84, 0x84, 0x84, 0x84, 0x84, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x91, 0xf3, 0x01, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+
+0x82, 0x44, 0x44, 0x28, 0x28, 0x10, 0x10, 0x10, 
+0x20, 0xc0, 0x00, 0x00, 0x91, 0xf3, 0x01, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+
+0x80, 0x80, 0x80, 0x80, 0xb8, 0xc4, 0x84, 0x84, 
+0x84, 0x84, 0x84, 0x00, 0x91, 0xf3, 0x01, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+</code></pre>
+
+
+
+
+</div>
+
+<div class="span3">
+
+
+<table class="table table-brodered">
+<thead><h4>draw_words信息</h4></thead>
+
+<tr>
+<td><span class="label">可执行文件:</span></td>
+<td>
+
+<div class="btn-group">
+<a class="btn" href="#">选择版本</a>
+<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#">windows</a></li>
+<li><a href="#">linux</a></li>
+</ul>
+</div>
+
+</td>
+</tr>
+
+
+
+<tr>
+<td><span class="label label-info">关注:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">fork 一份:</span></td>
+<td><a class="label" href="">1</a></td>
+</tr>
+
+<tr>
+<td><span class="label label-info">创建issuse:</span></td>
+<td><a class="label" href=""></a></td>
+</tr>
+</table>
+
+以上表单，当前未完成，需要查看代码请进入
+<a href="http://github.com/snyh/toy/tree/master/draw_words" target="_blank">github查看</a>
+
+</div>
+</div>
+
+
+<div id="Footer">
+create by snyh
+</div>
+
+</div>
+
+<script src="/assets/js/jquery-1.7.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+
+
+<script type="text/javascript">
+/*百度统计*/
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737a56dfdbad5bc9560d7399391e91dd' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+/*bootstrap自动tooltip绑定*/
+$(function(){
+
+});
+
+var jiathis_config = {data_track_clickback:true};
+
+/*IE兼容代码*/
+$(function() {
+	if ($.browser.msie === true && $.browser.version === '6.0') {  // anti pattern
+		// fix spans
+		$('.row div[class^="span"]:first-child').not('[class*="offset"]').addClass('first-child');
+
+		// fix offsets
+		$('.row div[class*="offset"]:first-child').each(function () {
+			var margin_left = parseInt($(this).css('margin-left'), 10) - 20;
+			$(this).css('margin-left', margin_left);
+		});
+	}
+});
+</script>
+</body>
+</html>
